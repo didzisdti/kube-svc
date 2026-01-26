@@ -27,7 +27,7 @@ spec:
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path | regexReplace("^kube-apps/([^/]+)/.*$", "$1")}}'
+        namespace: observability
 
       syncPolicy:
         automated:
