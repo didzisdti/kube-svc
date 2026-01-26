@@ -20,7 +20,7 @@ spec:
     spec:
       project: svc-platform
 
-      source:
+      sources:
         - repoURL: '{{values.repoURL}}'
           chart: '{{values.chart}}'
           targetRevision: '{{values.version}}'
