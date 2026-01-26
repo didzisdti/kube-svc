@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+
+metadata:
+  name: kube-svc-platform
+  namespace: argocd
+
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/didzisdti/kube-svc
+        revision: HEAD
+        directories:
+          - path: kube-apps/*
+
+  template:
+    metadata:
+      name: '{{path.basename}}'
+
+    spec:
+      project: svc-platform
+
+      source:
+        repoURL: https://github.com/didzisdti/kube-svc
+        targetRevision: HEAD
+        path: '{{path}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+        
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
