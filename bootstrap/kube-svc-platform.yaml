@@ -19,13 +19,19 @@ spec:
 
     spec:
       project: svc-platform
+
       source:
-        repoURL: '{{values.repoURL}}'
-        chart: '{{values.chart}}'
-        targetRevision: '{{values.version}}'
-        helm:
-          valueFiles:
-            - 'kube-apps-values/{{path.basename(1)}}/{{path.basename}}/values.yaml'
+        - repoURL: '{{values.repoURL}}'
+          chart: '{{values.chart}}'
+          targetRevision: '{{values.version}}'
+          helm:
+            valueFiles:
+              - '$values/kube-apps-values/{{path.basename(1)}}/{{path.basename}}/values.yaml'
+        - repoURL: https://github.com/didzisdti/kube-svc.git
+          targetRevision: HEAD
+          ref: values
+
+      
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{path.basename(1)}}'
