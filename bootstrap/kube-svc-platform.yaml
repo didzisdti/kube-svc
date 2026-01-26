@@ -8,24 +8,27 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/didzisdti/kube-svc
+        repoURL: https://github.com/didzisdti/kube-svc.git
         revision: HEAD
         directories:
-          - path: kube-apps/*/*
+          - path: kube-apps-values/*/*
 
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{path.basename}}-{{path.basename(1)}}'  # appname-groupname
 
     spec:
       project: svc-platform
       source:
-        repoURL: https://github.com/didzisdti/kube-svc
-        targetRevision: HEAD
-        path: '{{path}}'
+        repoURL: '{{values.repoURL}}'
+        chart: '{{values.chart}}'
+        targetRevision: '{{values.version}}'
+        helm:
+          valueFiles:
+            - 'kube-apps-values/{{path.basename(1)}}/{{path.basename}}/values.yaml'
       destination:
         server: https://kubernetes.default.svc
-        namespace: observability
+        namespace: '{{path.basename(1)}}'
       syncPolicy:
         automated:
           prune: true

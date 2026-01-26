@@ -13,16 +13,11 @@ spec:
       targetRevision: 80.13.0
       helm:
         valueFiles:
-          - $values/observability/prometheus/prometheus-values.yaml      
+          - 'kube-apps-values/observability/prometheus-values.yaml'     
 
-    - repoURL: https://github.com/didzisdti/kube-svc/
-      targetRevision: HEAD
-      ref: values
-      path: kube-app-values
-  
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring 
+    namespace: observability 
     
   syncPolicy:
     automated:
