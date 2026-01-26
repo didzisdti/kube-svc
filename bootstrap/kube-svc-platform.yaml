@@ -15,7 +15,7 @@ spec:
 
   template:
     metadata:
-      name: '{{path.basename}}-{{path.basename(1)}}'  # appname-groupname
+      name: '{{path.basename}}-{{path.splitList "/" | index 1}}'  # appname-groupname
 
     spec:
       project: svc-platform
@@ -34,7 +34,7 @@ spec:
       
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename(1)}}'
+        namespace: '{{path.splitList "/" | index 1}}'
       syncPolicy:
         automated:
           prune: true
