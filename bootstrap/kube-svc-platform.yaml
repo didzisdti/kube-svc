@@ -1,6 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
-
 metadata:
   name: kube-svc-platform
   namespace: argocd
@@ -15,26 +14,26 @@ spec:
 
   template:
     metadata:
-      name: '{{path.basename}}-{{path.splitList "/" | index 1}}'  # appname-groupname
+      # appname-groupname
+      name: '{{path.basename}}-{{path.splitList "/" | index 1}}'
 
     spec:
       project: svc-platform
 
-      sources:
-        - repoURL: '{{values.repoURL}}'
-          chart: '{{values.chart}}'
-          targetRevision: '{{values.version}}'
-          helm:
-            valueFiles:
-              - '$values/kube-apps-values/{{path.basename(1)}}/{{path.basename}}/values.yaml'
-        - repoURL: https://github.com/didzisdti/kube-svc.git
-          targetRevision: HEAD
-          ref: values
+      # Single source per app (Helm chart)
+      source:
+        repoURL: https://prometheus-community.github.io/helm-charts
+        chart: kube-prometheus-stack
+        targetRevision: 80.13.0
+        helm:
+          # Values file path relative to repo root
+          valueFiles:
+            - 'kube-apps-values/{{path.splitList "/" | index 1}}/{{path.basename}}/values.yaml'
 
-      
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{path.splitList "/" | index 1}}'
+
       syncPolicy:
         automated:
           prune: true
