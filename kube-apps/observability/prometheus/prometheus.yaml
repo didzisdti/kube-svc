@@ -5,7 +5,8 @@ metadata:
   namespace: argocd
 
 spec:
-  project: svc-platform
+  project:
+    name: svc-platform
 
   sources:
     - repoURL: https://prometheus-community.github.io/helm-charts
@@ -13,15 +14,16 @@ spec:
       targetRevision: 80.13.0
       helm:
         valueFiles:
-          - '$values/kube-apps-values/observability/prometheus/values.yaml'  
+          - $values/kube-apps-values/prometheus/prometheus-values.yaml      
 
-    - repoURL: https://github.com/didzisdti/kube-svc.git
+    - repoURL: https://github.com/didzisdti/kube-svc/
       targetRevision: HEAD
       ref: values
-      
+      path: .
+  
   destination:
     server: https://kubernetes.default.svc
-    namespace: observability 
+    namespace: monitoring 
     
   syncPolicy:
     automated:
