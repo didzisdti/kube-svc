@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/didzisdti/kube-svc
         revision: HEAD
         directories:
-          - path: kube-apps/*
+          - path: kube-apps/*/*
 
   template:
     metadata:
@@ -27,8 +27,8 @@ spec:
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd
-        
+        namespace: '{{path | regexReplace("^kube-apps/([^/]+)/.*$", "$1")}}'
+
       syncPolicy:
         automated:
           prune: true
