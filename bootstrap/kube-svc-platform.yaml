@@ -18,17 +18,14 @@ spec:
       name: '{{path.basename}}'
 
     spec:
-      project: svc-platform
-
+      project: default
       source:
         repoURL: https://github.com/didzisdti/kube-svc
         targetRevision: HEAD
         path: '{{path}}'
-
       destination:
         server: https://kubernetes.default.svc
         namespace: observability
-
       syncPolicy:
         automated:
           prune: true
