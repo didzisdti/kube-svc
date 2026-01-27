@@ -1,2 +1,12 @@
 grafana:
   enabled: true
+
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.dtikube.techinsights.com
+  
+  persistence:
+    enabled: true
+    size: 10Gi
