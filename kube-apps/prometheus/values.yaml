@@ -23,5 +23,3 @@ kube-state-metrics:
 prometheus-node-exporter:
   rbac:
     pspEnabled: false
-grafana:
-
