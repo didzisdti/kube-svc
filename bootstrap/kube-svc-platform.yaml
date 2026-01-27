@@ -7,25 +7,37 @@ metadata:
 
 spec:
   generators:
-    - git:
-        repoURL: https://github.com/didzisdti/kube-svc
-        revision: HEAD
-        directories:
-          - path: kube-apps/*/*
+    - list:
+        elements:
+          - name: prometheus
 
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: prometheus
     spec:
-      project: svc-platform
-      source:
-        repoURL: https://github.com/didzisdti/kube-svc
-        targetRevision: HEAD
-        path: '{{path}}'
+      project: default
+
+      sources:
+        # Helm chart from external repo
+        - repoURL: https://prometheus-community.github.io/helm-charts
+          chart: kube-prometheus-stack
+          targetRevision: 80.13.0
+          helm:
+            valueFiles:
+              - $values/kube-apps/prometheus/values.yaml
+
+        # Git repo for values
+        - repoURL: https://github.com/didzisdti/kube-svc
+          targetRevision: HEAD
+          ref: values
+
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
+
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
