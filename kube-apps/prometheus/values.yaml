@@ -1,6 +1,9 @@
 grafana:
   enabled: true
 
+  rbac:
+    pspEnabled: false
+
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -10,3 +13,15 @@ grafana:
   persistence:
     enabled: true
     size: 10Gi
+
+global:
+  rbac:
+    pspEnabled: false
+kube-state-metrics:
+  podSecurityPolicy:
+    enabled: false
+prometheus-node-exporter:
+  rbac:
+    pspEnabled: false
+grafana:
+
