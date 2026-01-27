@@ -14,12 +14,6 @@ grafana:
     enabled: true
     size: 10Gi
 
-global:
-  rbac:
-    pspEnabled: false
-kube-state-metrics:
-  podSecurityPolicy:
-    enabled: false
-prometheus-node-exporter:
-  rbac:
-    pspEnabled: false
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false 
