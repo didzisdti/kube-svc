@@ -42,3 +42,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - Replace=true
+          - SkipHooks=true
