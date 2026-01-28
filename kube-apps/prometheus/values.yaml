@@ -17,3 +17,20 @@ grafana:
 prometheusOperator:
   admissionWebhooks:
     enabled: false 
+
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: 500m
+      limits:
+        memory: 8Gi
+    retention: 15d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
