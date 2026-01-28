@@ -13,6 +13,7 @@ grafana:
   persistence:
     enabled: true
     size: 10Gi
+    existingClaim: prometheus-grafana
 
 prometheusOperator:
   admissionWebhooks:
